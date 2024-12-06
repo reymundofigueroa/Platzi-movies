@@ -1,0 +1,27 @@
+{
+  "name": "platzi-movies",
+  "version": "1.0.0",
+  "description": "App de consumo de la API REST The movie DB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reymundofigueroa/Platzi-movies.git"
+  },
+  "keywords": [
+    "JS",
+    "HTML",
+    "CSS",
+    "API",
+    "REST",
+    "AXIOS"
+  ],
+  "author": "Reymundo Figueroa <reymundo_124@hotmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reymundofigueroa/Platzi-movies/issues"
+  },
+  "homepage": "https://github.com/reymundofigueroa/Platzi-movies#readme"
+}
