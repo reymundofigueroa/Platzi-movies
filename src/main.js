@@ -1,10 +1,14 @@
+const api = axios.create({
+  baseURL: 'https://api.themoviedb.org/3/',
+  headers: {
+    'accept': 'application/json',
+    'Authorization': `Bearer ${API_KEY}` 
+  },
+})
+
 async function getTrendMoviesPreview(){
-  const options = {
-    method: 'GET',
-    headers: {accept: 'application/json', Authorization: `Bearer ${API_KEY}`}
-  };
-  const res = await fetch('https://api.themoviedb.org/3/trending/movie/week', options)
-  const data = await res.json()
+  
+  const { data } = await api('trending/movie/week')
   const movies = data.results
 
   console.log('tamaño array' + movies.length)
@@ -30,12 +34,7 @@ async function getTrendMoviesPreview(){
 }
 
 async function getCategoriesPreview(){
-  const options = {
-    method: 'GET',
-    headers: {accept: 'application/json', Authorization: `Bearer ${API_KEY}`}
-  };
-  const res = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options)
-  const data = await res.json()
+  const { data } = await api('genre/movie/list?language=en')
 
   const categories = data.genres
 
