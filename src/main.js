@@ -6,43 +6,24 @@ const api = axios.create({
   },
 })
 
+// LLamados a la API
+
 async function getTrendMoviesPreview(){
-  
   const { data } = await api('trending/movie/week')
   const movies = data.results
 
-  trendingMoviesPreviewList.innerHTML = ''
-
-  renderMoviesList(movies, trendingMoviesPreviewList)
+  renderMoviesList(movies, trendingMoviesPreviewList) 
 }
 
 async function getCategoriesPreview(){
   const { data } = await api('genre/movie/list?language=en')
-
   const categories = data.genres
 
-  categoriesPreviewList.innerHTML = ''
-
-  categories.forEach(category => {
-    const categoryContainerDiv = document.createElement('div')
-    categoryContainerDiv.classList.add('category-container')
-
-    const categoryTitle = document.createElement('h3')
-    categoryTitle.classList.add('category-title')
-    categoryTitle.textContent = `${category.name}`
-    categoryTitle.id = `id${category.id}`
-    categoryTitle.addEventListener('click', () => {
-      location.hash = `#category=${category.id}-${category.name}`
-    })
-
-    categoryContainerDiv.appendChild(categoryTitle)
-    categoriesPreviewList.appendChild(categoryContainerDiv)
-  })
+  renderCategories(categories, categoriesPreviewList)
 }
 
 
 async function getMoviesByCategory(categoryId){
-  
   const { data } = await api('discover/movie', {
     params: {
       with_genres: categoryId
@@ -52,6 +33,19 @@ async function getMoviesByCategory(categoryId){
 
   renderMoviesList(movies, genericSection)
 }
+
+async function getMoviesBySearch(query){
+  const { data } = await api('search/movie', {
+    params: {
+      query,
+    }
+  })
+  const movies = data.results
+
+  renderMoviesList(movies, genericSection)
+}
+
+// Utils
 
 function renderMoviesList(data, container){
   container.innerHTML = ''
@@ -73,4 +67,24 @@ function renderMoviesList(data, container){
 
     
   });
+}
+
+function renderCategories(categories, container){
+  categoriesPreviewList.innerHTML = ''
+
+  categories.forEach(category => {
+    const categoryContainerDiv = document.createElement('div')
+    categoryContainerDiv.classList.add('category-container')
+
+    const categoryTitle = document.createElement('h3')
+    categoryTitle.classList.add('category-title')
+    categoryTitle.textContent = `${category.name}`
+    categoryTitle.id = `id${category.id}`
+    categoryTitle.addEventListener('click', () => {
+      location.hash = `#category=${category.id}-${category.name}`
+    })
+
+    categoryContainerDiv.appendChild(categoryTitle)
+    container.appendChild(categoryContainerDiv)
+  })
 }

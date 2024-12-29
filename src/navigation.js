@@ -1,5 +1,6 @@
 searchFormBtn.addEventListener('click', () => {
-  location.hash = '#search='
+  const search = searchFormInput.value
+  location.hash = '#search=' + search
 })
 trendingBtn.addEventListener('click', () => {
   location.hash = '#trends'
@@ -71,7 +72,7 @@ function searchPage(){
   headerSection.style.background = ''
   arrowBtn.classList.remove('inactive')
   arrowBtn.classList.remove('header-arrow--white')
-  headerCategoryTitle.classList.remove('inactive')
+  headerCategoryTitle.classList.add('inactive')
   headerTitle.classList.add('inactive')
   searchForm.classList.remove('inactive')
 
@@ -79,6 +80,10 @@ function searchPage(){
   categoriesPreviewSection.classList.add('inactive')
   genericSection.classList.remove('inactive')
   movieDetailSection.classList.add('inactive')
+
+  const [_, searchValue] = location.hash.split('=')
+  getMoviesBySearch(searchValue)
+
 }
 function moviePage(){
   console.log('Movie!!')
