@@ -45,6 +45,14 @@ async function getMoviesBySearch(query){
   renderMoviesList(movies, genericSection)
 }
 
+async function getTrendMovies(){
+  const { data } = await api('trending/movie/week')
+  const movies = data.results
+
+  renderMoviesList(movies, genericSection) 
+}
+
+
 // Utils
 
 function renderMoviesList(data, container){

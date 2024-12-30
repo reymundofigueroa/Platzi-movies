@@ -2,12 +2,15 @@ searchFormBtn.addEventListener('click', () => {
   const search = searchFormInput.value
   location.hash = '#search=' + search
 })
+
 trendingBtn.addEventListener('click', () => {
   location.hash = '#trends'
 })
+
 arrowBtn.addEventListener('click', () => {
-  location.hash = '#home'
+  window.history.go(-2);
 })
+
 window.addEventListener('DOMContentLoaded', navigator, false)
 window.addEventListener('hashchange', navigator, false)
 
@@ -64,6 +67,9 @@ function trendPage(){
   categoriesPreviewSection.classList.add('inactive')
   genericSection.classList.remove('inactive')
   movieDetailSection.classList.add('inactive')
+
+  headerCategoryTitle.textContent = 'Tendencias'
+  getTrendMovies()
 }
 function searchPage(){
   console.log('Search!!')
