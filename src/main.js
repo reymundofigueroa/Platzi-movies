@@ -52,7 +52,33 @@ async function getTrendMovies(){
   renderMoviesList(movies, genericSection) 
 }
 
+async function getMovieById(movieId){
+  const { data: movie } = await api(`movie/${movieId}`)
 
+  const movieImgUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+
+  movieDetailTitle.textContent = movie.title
+  movieDetailDescription.textContent = movie.overview
+  movieDetailScore.textContent = movie.vote_average
+  
+  headerSection.style.background = `
+  linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.35) 19.27%,
+    rgba(0, 0, 0, 0) 29.17%
+    ),
+  url(${movieImgUrl})`
+
+  renderCategories(movie.genres, movieDetailCategoriesList)
+  getRelatedMovies(movieId) 
+}
+
+async function getRelatedMovies(movieId){
+  const { data } = await api(`movie/${movieId}/similar`)
+  const movies = data.results
+
+  renderMoviesList(movies, relatedMoviesContainer)
+}
 // Utils
 
 function renderMoviesList(data, container){
@@ -61,6 +87,10 @@ function renderMoviesList(data, container){
   data.forEach(movie => {
     const movieCOntainer = document.createElement('div')
     movieCOntainer.classList.add('movie-container')
+
+    movieCOntainer.addEventListener('click', () => {
+      location.hash = `#movie=${movie.id}`
+    })
 
     const img = document.createElement('img')
     img.classList.add('movie-img')
@@ -78,7 +108,7 @@ function renderMoviesList(data, container){
 }
 
 function renderCategories(categories, container){
-  categoriesPreviewList.innerHTML = ''
+  container.innerHTML = ''
 
   categories.forEach(category => {
     const categoryContainerDiv = document.createElement('div')

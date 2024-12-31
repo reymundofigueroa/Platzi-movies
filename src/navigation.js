@@ -8,7 +8,11 @@ trendingBtn.addEventListener('click', () => {
 })
 
 arrowBtn.addEventListener('click', () => {
-  window.history.go(-2);
+  if (location.hash.includes('search')){
+    window.history.go(-2);
+  }else{
+    window.history.go(-1);
+  }
 })
 
 window.addEventListener('DOMContentLoaded', navigator, false)
@@ -107,6 +111,8 @@ function moviePage(){
   genericSection.classList.add('inactive')
   movieDetailSection.classList.remove('inactive')
 
+  const [_, movieId] = location.hash.split('=')
+  getMovieById(movieId)
 }
 function categoryPage(){
 
