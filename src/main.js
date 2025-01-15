@@ -95,16 +95,14 @@ function renderMoviesList(data, container){
     const img = document.createElement('img')
     img.classList.add('movie-img')
     
-    img.setAttribute(
-      'src', 
-      'https://image.tmdb.org/t/p/w300' + movie.poster_path)
-    img.setAttribute('alt', 'Nombre de la película')
+    img.setAttribute('data-src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path); 
+    img.setAttribute('alt', movie.title); 
+    img.src = 'placeholder.jpg';
 
     movieCOntainer.appendChild(img)
-    container.appendChild(movieCOntainer)
-
-    
+    container.appendChild(movieCOntainer)   
   });
+  iniciarLazyLoading();
 }
 
 function renderCategories(categories, container){
