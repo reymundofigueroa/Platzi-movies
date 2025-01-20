@@ -94,7 +94,9 @@ function renderMoviesList(data, container){
 
     const img = document.createElement('img')
     img.classList.add('movie-img')
-    
+    img.addEventListener('error', () => {
+      img.setAttribute('src', 'https://static.platzi.com/static/images/error/img404.png')
+    })
     img.setAttribute('data-src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path); 
     img.setAttribute('alt', movie.title); 
     img.src = 'placeholder.jpg';
