@@ -48,9 +48,33 @@ async function getMoviesBySearch(query){
 async function getTrendMovies(){
   const { data } = await api('trending/movie/week')
   const movies = data.results
-
+  maxPage = data.total_pages
   renderMoviesList(movies, genericSection) 
 }
+
+
+
+async function getPaginatedTrendingMovies(){
+  const 
+  { 
+    scrollTop, 
+    scrollHeight,
+    clientHeight  
+  } = document.documentElement;
+
+  const scrollIsAtTheBottom = (scrollTop + clientHeight) >= (scrollHeight );
+  const pageIsNotMax = page < maxPage
+
+if(scrollIsAtTheBottom && pageIsNotMax){
+  page++
+  const {data} = await api('trending/movie/week', {
+    params: {
+      page,
+    }
+  })
+  const movies = data.results
+  renderMoviesList(movies, genericSection, false)
+}}
 
 async function getMovieById(movieId){
   const { data: movie } = await api(`movie/${movieId}`)
@@ -81,8 +105,8 @@ async function getRelatedMovies(movieId){
 }
 // Utils
 
-function renderMoviesList(data, container){
-  container.innerHTML = ''
+function renderMoviesList(data, container, clean = true){
+  if(clean) container.innerHTML = ''
 
   data.forEach(movie => {
     const movieCOntainer = document.createElement('div')

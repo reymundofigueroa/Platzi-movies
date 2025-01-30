@@ -1,3 +1,6 @@
+let page = 1
+let maxPage
+let infiniteScroll
 searchFormBtn.addEventListener('click', () => {
   const search = searchFormInput.value
   location.hash = '#search=' + search
@@ -18,8 +21,14 @@ arrowBtn.addEventListener('click', () => {
 window.addEventListener('DOMContentLoaded', navigator, false)
 window.addEventListener('hashchange', navigator, false)
 
+
 function navigator (){
   console.log({location})
+
+  if(infiniteScroll){
+    window.removeEventListener('scroll', infiniteScroll, {passive: false})
+    infiniteScroll = undefined
+  }
 
   if (location.hash.startsWith('#trends')){
     trendPage()
@@ -33,6 +42,10 @@ function navigator (){
     categoryPage()
   } else {
     homePage()
+  }
+
+  if(infiniteScroll){
+    window.addEventListener('scroll', infiniteScroll, {passive: false})
   }
 }
 
@@ -74,6 +87,7 @@ function trendPage(){
 
   headerCategoryTitle.textContent = 'Tendencias'
   getTrendMovies()
+  infiniteScroll = getPaginatedTrendingMovies
 }
 function searchPage(){
   console.log('Search!!')
