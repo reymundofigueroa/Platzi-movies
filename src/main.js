@@ -34,6 +34,33 @@ async function getMoviesByCategory(categoryId){
   renderMoviesList(movies, genericSection)
 }
 
+function getPaginatedMoviesByCategory(categoryId){
+  return async function(){
+    const 
+    { 
+      scrollTop, 
+      scrollHeight,
+      clientHeight  
+    } = document.documentElement;
+    console.log('ejecutando!!')
+    const scrollIsAtTheBottom = (scrollTop + clientHeight) >= (scrollHeight );
+  
+  if(scrollIsAtTheBottom){
+    page++
+    console.log('if ejecutado')
+    const { data } = await api('discover/movie', {
+      params: {
+        with_genres: categoryId,
+        page,
+      }
+    })
+    const movies = data.results
+    console.log(data.total_pages)
+    renderMoviesList(movies, genericSection, false)
+  }
+  }
+}
+
 async function getMoviesBySearch(query){
   const { data } = await api('search/movie', {
     params: {
@@ -41,9 +68,39 @@ async function getMoviesBySearch(query){
     }
   })
   const movies = data.results
-
+  
   renderMoviesList(movies, genericSection)
 }
+
+function getPaginatedMoviesBySearch(query){
+  return async function(){
+    const 
+    { 
+      scrollTop, 
+      scrollHeight,
+      clientHeight  
+    } = document.documentElement;
+    console.log('ejecutando!!')
+    const scrollIsAtTheBottom = (scrollTop + clientHeight) >= (scrollHeight );
+    
+    const pageIsNotMax = page < maxPage
+  
+  if(scrollIsAtTheBottom){
+    page++
+    console.log('if ejecutado')
+    const { data } = await api('search/movie', {
+      params: {
+        query,
+        page,
+      },
+    })
+    const movies = data.results
+    console.log(data.total_pages)
+    renderMoviesList(movies, genericSection, false)
+  }
+  }
+}
+
 
 async function getTrendMovies(){
   const { data } = await api('trending/movie/week')
@@ -51,8 +108,6 @@ async function getTrendMovies(){
   maxPage = data.total_pages
   renderMoviesList(movies, genericSection) 
 }
-
-
 
 async function getPaginatedTrendingMovies(){
   const 

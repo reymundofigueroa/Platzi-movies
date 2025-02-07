@@ -20,7 +20,7 @@ arrowBtn.addEventListener('click', () => {
 
 window.addEventListener('DOMContentLoaded', navigator, false)
 window.addEventListener('hashchange', navigator, false)
-
+window.addEventListener('scroll', infiniteScroll, {passive: false})
 
 function navigator (){
   console.log({location})
@@ -108,6 +108,8 @@ function searchPage(){
   const [_, searchValue] = location.hash.split('=')
   getMoviesBySearch(searchValue)
 
+  infiniteScroll = getPaginatedMoviesBySearch(searchValue)
+
 }
 function moviePage(){
   console.log('Movie!!')
@@ -149,4 +151,5 @@ function categoryPage(){
   headerCategoryTitle.textContent = categoryName
   getMoviesByCategory(categoryId)
   console.log('Categories!!')
+  infiniteScroll = getPaginatedMoviesByCategory(categoryId)
 }
