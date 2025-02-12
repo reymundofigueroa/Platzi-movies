@@ -167,9 +167,7 @@ function renderMoviesList(data, container, clean = true){
     const movieCOntainer = document.createElement('div')
     movieCOntainer.classList.add('movie-container')
 
-    movieCOntainer.addEventListener('click', () => {
-      location.hash = `#movie=${movie.id}`
-    })
+   
 
     const img = document.createElement('img')
     img.classList.add('movie-img')
@@ -180,9 +178,24 @@ function renderMoviesList(data, container, clean = true){
     img.setAttribute('alt', movie.title); 
     img.src = 'placeholder.jpg';
 
+    img.addEventListener('click', () => {
+      location.hash = `#movie=${movie.id}`
+    })
+
+    const movieBtn = document.createElement('button')
+    movieBtn.classList.add('movie-btn')
+    movieBtn.addEventListener('click', () => {
+      movieBtn.classList.toggle('movie-btn--liked')
+      // Deberíamos agregar la película a la lista de favoritos
+    })
+
     movieCOntainer.appendChild(img)
+    movieCOntainer.appendChild(movieBtn)
     container.appendChild(movieCOntainer)   
   });
+
+  
+
   iniciarLazyLoading();
 }
 
